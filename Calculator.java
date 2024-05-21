@@ -13,7 +13,7 @@ public class Calculator implements ActionListener {
     JButton add, sub, div,mul,mod,result;
 
     Calculator(){
-        frame = new JFrame("Calculator App");
+        frame = new JFrame(" Simple Calculator ");
         frame.setLocation(200, 200);
         frame.setLayout(null);
         frame.setSize(400,400);
@@ -101,7 +101,8 @@ public class Calculator implements ActionListener {
 
 
     public static void main(String[] args) {
-        Calculator obj = new Calculator();
+         new Calculator();
         
     }
 }
+
