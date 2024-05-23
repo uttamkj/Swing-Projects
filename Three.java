@@ -1,40 +1,96 @@
-import java.sql.*;
-class Three{
-	public static void main(String args[]){
-		try{
-			Class.forName("oracle.jdbc.driver.OracleDriver");
-			Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","system","uttam");
-			if(con != null){
-				System.out.println("Connected....");
-			}
-			
-			String qry = "select * from Employee1";
-			Statement smt = con.createStatement();
-			ResultSet rs = smt.executeQuery(qry);
-			// while(rs.next()){
-			// 	System.out.println(rs.getInt(1)+"\t"+rs.getString(2)+"\t"+rs.getInt(3)+"\t"+rs.getString(4)+"\t"+rs.getString(5)+"\t"+rs.getInt(6));
-			// }
-			while(rs.next()){
-				int eid = rs.getInt("eid"); 
-				String name = rs.getString("name");
-				String mobile = rs.getString("mobile");
-				String email = rs.getString("email");
-				String dept_name = rs.getString("dept_name");
-				int salary = rs.getInt("salary");
+// claculator
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
 
-				System.out.println(eid + "\t" + name + "\t" + mobile + "\t" + email + "\t" + dept_name + "\t" + salary);
+public class Three implements ActionListener{
+	JFrame frame;
+	JLabel text1,text2,result;
+	JTextField field1,field2;
+	JButton btnAdd, btnmin,btnMul,btnDiv;
+	Three(){
+		frame = new JFrame("Simple Calculator");
+		frame.setSize(450,450);
+		frame.setLocation(300,200);
+		frame.setLayout(null);
+		
+		text1 = new JLabel("Enter First number");
+		text1.setBounds(30,20,350,30);
+		frame.add(text1);
+		
+		field1 = new JTextField();
+		field1.setBounds(30,60,250,30);
+		frame.add(field1);
+		
+		text2 = new JLabel("Enter Second number");
+		text2.setBounds(30,100,350,30);
+		frame.add(text2);
+		
+		field2 = new JTextField();
+		field2.setBounds(30,140,250,30);
+		frame.add(field2);
+		
+		
+		
+		btnAdd = new JButton("+");
+		btnmin = new JButton("-");
+		btnMul = new JButton("*");
+		btnDiv = new JButton("/");
+		
+		
+		btnAdd.setBounds(30,180,50,30);
+		btnmin.setBounds(110,180,50,30);
+		btnMul.setBounds(190,180,50,30);
+		btnDiv.setBounds(270,180,50,30);
+		
+		frame.add(btnAdd);
+		frame.add(btnmin);
+		frame.add(btnMul);
+		frame.add(btnDiv);
+		
+		btnAdd.addActionListener(this);
+		btnmin.addActionListener(this);
+		btnMul.addActionListener(this);
+		btnDiv.addActionListener(this);
+		
+		result = new JLabel("Result");
+		result.setBounds(30,220,350,30);
+		frame.add(result);
+	    
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setVisible(true);
+	}
+	public void actionPerformed(ActionEvent ae){
+		
+		try{
+			int a = Integer.parseInt(field1.getText());
+		    int b = Integer.parseInt(field2.getText());
+			int c ;
+			if(ae.getSource().equals(btnAdd)){
+				c = a+b;
+				result.setText("Result: "+c);
 			}
-			
-			rs.close();
-			smt.close();
-			con.close();
-			
-		}catch(ClassNotFoundException ce){
-			System.out.println(ce);
-		}catch(SQLException se){
-			System.out.println(se);
-		}catch(Exception e){
-			System.out.println(e);
-		}
+			else if(ae.getSource().equals(btnmin)){
+				c = a-b;
+				result.setText("Result: "+c);
+			}
+			else if(ae.getSource().equals(btnMul)){
+				c = a*b;
+				result.setText("Result: "+c);
+			}else if (ae.getSource().equals(btnDiv)){
+			c = a/b;
+				result.setText("Result: "+c);
+			}
+			}catch(NumberFormatException ne){
+				result.setText("NumberFormatException");
+			}catch(ArithmeticException aa ){
+				result.setText("ArithmeticException");
+			}catch(Exception e){
+				System.out.println(e);
+			}
+		
+	}
+	public static void main(String args[]){
+			new Three();
 	}
 }
